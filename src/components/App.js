@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StatusBar, Navigator } from 'react-native';
 import Authentication from './Authentication/Authentication';
+import SignIn from './Authentication/SignIn';
+import SignUp from './Authentication/SignUp';
 import ChangeInfo from './ChangeInfo/ChangeInfo';
 import Main from './Main/Main';
 import OrderHistory from './OrderHistory/OrderHistory';
@@ -17,6 +19,8 @@ export default class App extends Component {
                         case 'Main': return <Main navigator={navigator} />;
                         case 'ChangeInfo': return <ChangeInfo navigator={navigator} />;
                         case 'Authentication': return <Authentication navigator={navigator} />;
+                        case 'SignIn': return <SignIn navigator={navigator} />;
+                        case 'SignUp': return <SignUp navigator={navigator} />;
                         default: return <OrderHistory navigator={navigator} />;
                     }
                 }}

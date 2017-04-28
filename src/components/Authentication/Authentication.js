@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
+import HeaderAuthen from './HeaderAuthen';
+import SignIn from './SignIn';
 
 export default class Authentication extends Component {
-    gobackToMain() {
-        const { navigator } = this.props;
-        navigator.pop();
-    }
+    
     render() {
+         const { navigator } = this.props;
         return (
-            <View style={{ flex: 1, backgroundColor: '#0079ff' }}>
-                <Text>Authentication component</Text>
-
-                <TouchableOpacity onPress={this.gobackToMain.bind(this)}>
-                   <Text>Go back to main component</Text>
-                </TouchableOpacity>
+            <View style={{ flex: 1, backgroundColor: '#26b391' }}>
+                <HeaderAuthen navigator={navigator} />
+                <SignIn navigator={navigator} />
             </View>
         );
     }
