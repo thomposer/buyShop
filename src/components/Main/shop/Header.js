@@ -15,7 +15,7 @@ class Header extends Component {
                     <TouchableOpacity onPress={this.props.onOpen}>
                         <Image source={icMenu} style={iconStyle} />
                     </TouchableOpacity>
-                    <Text style={titleStyle}>Wearing a Dress</Text>
+                    <Text style={titleStyle} underlineColorAndroid='transparent'>Wearing a Dress</Text>
                     <Image source={icLogo} style={iconStyle} />
                 </View>
                 <TextInput 
