@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import bannerImage from '../../../../media/temp/banner.jpg';
 
 const { width, height } = Dimensions.get('window');
 class Collection extends Component {
+    gotoProductDetail() {
+        const { navigator } = this.props;
+        navigator.push({ name: 'ProductDetail' });
+    }
     render() {
         const { wrapper, textStyle, imageStyle } = styles;
         return (
@@ -12,15 +16,17 @@ class Collection extends Component {
                     <Text style={textStyle}>SPRING Collection</Text>
                 </View>
                 <View style={{ flex: 4, justifyContent: 'flex-end' }}>
-                    <Image source={bannerImage} style={imageStyle} />
+                    <TouchableOpacity>
+                        <Image source={bannerImage} style={imageStyle} />
+                    </TouchableOpacity>
                 </View>
 
             </View>
         );
     }
 }
-const imageWidth = width - 40; 
-const imageHeight = (imageWidth / 933) * 465; 
+const imageWidth = width - 40;
+const imageHeight = (imageWidth / 933) * 465;
 const styles = StyleSheet.create({
     wrapper: {
         height: height * 0.35,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
 import sp1 from '../../../../media/temp/sp1.jpeg';
 import sp2 from '../../../../media/temp/sp2.jpeg';
@@ -7,6 +7,10 @@ import sp3 from '../../../../media/temp/sp3.jpeg';
 import sp4 from '../../../../media/temp/sp4.jpeg';
 
 class TopProduct extends Component {
+    gotoDetail() {
+        const { navigator } = this.props;
+        navigator.push({ name: 'ProductDetail' });
+    }
     render() {
         const { container, titleContainer, title,
             body, productStyle, productImage,
@@ -17,27 +21,27 @@ class TopProduct extends Component {
                     <Text style={title}> TOP PRODUCT</Text>
                 </View>
                 <View style={body}>
-                    <View style={productStyle}>
+                    <TouchableOpacity style={productStyle} onPress={this.gotoDetail.bind(this)}>
                         <Image source={sp1} style={productImage} />
                         <Text style={productName}> Name PRODUCT</Text>
                         <Text style={productPrice}> $400</Text>
-                    </View>
-                    <View style={productStyle}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={productStyle} onPress={this.gotoDetail.bind(this)}>
                         <Image source={sp2} style={productImage} />
                         <Text style={productName}> Name PRODUCT</Text>
                         <Text style={productPrice}> $400</Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={{ height: 10, width }} />
-                    <View style={productStyle}>
+                    <TouchableOpacity style={productStyle} onPress={this.gotoDetail.bind(this)}>
                         <Image source={sp3} style={productImage} />
                         <Text style={productName}> Name PRODUCT</Text>
                         <Text style={productPrice}> $400</Text>
-                    </View>
-                    <View style={productStyle}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={productStyle} onPress={this.gotoDetail.bind(this)}>
                         <Image source={sp4} style={productImage} />
                         <Text style={productName}> Name PRODUCT</Text>
                         <Text style={productPrice}> $400</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
