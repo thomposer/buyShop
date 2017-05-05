@@ -46,21 +46,9 @@ export default class Shop extends Component {
                         {<Home />}
                     </TabNavigator.Item>
                     <TabNavigator.Item
-                        selected={this.state.selectedTab === 'contact'}
-                        title="Contact"
-                        onPress={() => this.setState({ selectedTab: 'contact' })}
-                        renderIcon={() => <Image source={icContact} style={iconStyle} />}
-                        renderSelectedIcon={
-                            () => <Image source={icContactSelected} style={iconStyle} />
-                        }
-                        badgeText="1"
-                        selectedTitleStyle={{ color: '#26b391' }}
-                    >
-                        {<Contact />}
-                    </TabNavigator.Item>
-                    <TabNavigator.Item
                         selected={this.state.selectedTab === 'cart'}
                         title="Cart"
+                        badgeText="1"
                         onPress={() => this.setState({ selectedTab: 'cart' })}
                         renderIcon={() => <Image source={icCart} style={iconStyle} />}
                         renderSelectedIcon={
@@ -82,6 +70,19 @@ export default class Shop extends Component {
                     >
                         {<Search />}
                     </TabNavigator.Item>
+                    <TabNavigator.Item
+                        selected={this.state.selectedTab === 'contact'}
+                        title="Contact"
+                        onPress={() => this.setState({ selectedTab: 'contact' })}
+                        renderIcon={() => <Image source={icContact} style={iconStyle} />}
+                        renderSelectedIcon={
+                            () => <Image source={icContactSelected} style={iconStyle} />
+                        }
+                        selectedTitleStyle={{ color: '#26b391' }}
+                    >
+                        {<Contact />}
+                    </TabNavigator.Item>
+                    
                 </TabNavigator>
             </View>
         );

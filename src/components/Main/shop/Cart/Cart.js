@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { Navigator } from 'react-native';
+import CartView from './CartView';
+import ProductDetail from '../ProductDetail/ProductDetail';
 
 class Cart extends Component {
+    
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: '#ff9943' }}>
-                <Text>
-                    Cart
-                </Text>
-            </View>
+            <Navigator
+                initialRoute={{ name: 'CartView' }}
+                renderScene={(route, navigator) => {
+                    switch (route.name) {
+                        case 'CartView': return <CartView navigator={navigator} />;
+                        default: return <ProductDetail navigator={navigator} />;
+                    }
+                }
+                }
+            />
         );
     }
 }
 
 export default Cart;
+
