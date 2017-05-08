@@ -21,7 +21,7 @@ export default class Shop extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { selectedTab: 'cart' };
+        this.state = { selectedTab: 'home' };
     }
     openMenu() {
         const { open } = this.props;
