@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
-import sp1 from '../../../../media/temp/sp1.jpeg';
-import sp2 from '../../../../media/temp/sp2.jpeg';
-import sp3 from '../../../../media/temp/sp3.jpeg';
-import sp4 from '../../../../media/temp/sp4.jpeg';
+const url = 'http://localhost/app/images/product/';
 
 class TopProduct extends Component {
-    gotoDetail() {
+    gotoDetail(product) {
         const { navigator } = this.props;
-        navigator.push({ name: 'ProductDetail' });
+        navigator.push({ name: 'ProductDetail', product });
     }
     render() {
+        const { topProducts } = this.props;
+
         const { container, titleContainer, title,
             body, productStyle, productImage,
             productName, productPrice } = styles;
@@ -21,27 +20,14 @@ class TopProduct extends Component {
                     <Text style={title}> TOP PRODUCT</Text>
                 </View>
                 <View style={body}>
-                    <TouchableOpacity style={productStyle} onPress={this.gotoDetail.bind(this)}>
-                        <Image source={sp1} style={productImage} />
-                        <Text style={productName}> Name PRODUCT</Text>
-                        <Text style={productPrice}> $400</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={productStyle} onPress={this.gotoDetail.bind(this)}>
-                        <Image source={sp2} style={productImage} />
-                        <Text style={productName}> Name PRODUCT</Text>
-                        <Text style={productPrice}> $400</Text>
-                    </TouchableOpacity>
-                    <View style={{ height: 10, width }} />
-                    <TouchableOpacity style={productStyle} onPress={this.gotoDetail.bind(this)}>
-                        <Image source={sp3} style={productImage} />
-                        <Text style={productName}> Name PRODUCT</Text>
-                        <Text style={productPrice}> $400</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={productStyle} onPress={this.gotoDetail.bind(this)}>
-                        <Image source={sp4} style={productImage} />
-                        <Text style={productName}> Name PRODUCT</Text>
-                        <Text style={productPrice}> $400</Text>
-                    </TouchableOpacity>
+                    {topProducts.map(e => (
+                        <TouchableOpacity style={productStyle} onPress={() => this.gotoDetail(e)} key={e.id}>
+                            <Image source={{ uri: `${url}${e.images[0]}` }} style={productImage} />
+                            <Text style={productName}>{e.name.toUpperCase()}</Text>
+                            <Text style={productPrice}> ${e.price}</Text>
+                        </TouchableOpacity>
+                    ))}
+
                 </View>
             </View>
         );

@@ -2,18 +2,15 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-swiper';
 
-import littleIcon from '../../../../media/temp/little.jpg';
-import maxiIcon from '../../../../media/temp/maxi.jpg';
-import partyIcon from '../../../../media/temp/party.jpg';
-
-const { width, height } = Dimensions.get('window');
-
+const { width } = Dimensions.get('window');
+const url = 'http://localhost/app/images/type/';
 class Collection extends Component {
     gotoListProduct() {
         const { navigator } = this.props;
         navigator.push({ name: 'ListProduct' });
     }
     render() {
+        const { types } = this.props;
         const { wrapper, textStyle, imageStyle, cateTitle } = styles;
         return (
             <View style={wrapper}>
@@ -22,21 +19,14 @@ class Collection extends Component {
                 </View>
                 <View style={{ flex: 4, justifyContent: 'flex-end' }}>
                     <Swiper width={imageWidth} height={imageHeight}>
-                        <TouchableOpacity onPress={this.gotoListProduct.bind(this)}>
-                            <Image source={littleIcon} style={imageStyle}>
-                                <Text style={cateTitle}>Maxi Dress</Text>
-                            </Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.gotoListProduct.bind(this)}>
-                            <Image source={maxiIcon} style={imageStyle} >
-                                <Text style={cateTitle}>Maxi Dress</Text>
-                            </Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.gotoListProduct.bind(this)}>
-                            <Image source={partyIcon} style={imageStyle} >
-                                <Text style={cateTitle}>Maxi Dress</Text>
-                            </Image>
-                        </TouchableOpacity>
+                        {types.map(e => (
+                            <TouchableOpacity onPress={this.gotoListProduct.bind(this)} key={e.id}>
+                                <Image source={{ uri: `${url}${e.image}` }} style={imageStyle}>
+                                    <Text style={cateTitle}>{e.name}</Text>
+                                </Image>
+                            </TouchableOpacity>
+                        ))}
+
                     </Swiper>
                 </View>
             </View>
@@ -47,7 +37,6 @@ const imageWidth = width - 40;
 const imageHeight = imageWidth / 2;
 const styles = StyleSheet.create({
     wrapper: {
-        height: height * 0.35,
         backgroundColor: '#FFF',
         margin: 10,
         justifyContent: 'space-between',

@@ -6,13 +6,14 @@ import ListProduct from '../ListProduct/ListProduct';
 
 class Home extends Component {
     render() {
+        const { types, topProducts } = this.props;
         return (
             <Navigator
                 initialRoute={{ name: 'HomeView' }}
                 renderScene={(route, navigator) => {
                     switch (route.name) {
-                        case 'HomeView': return <HomeView navigator={navigator} />;
-                        case 'ProductDetail': return <ProductDetail navigator={navigator} />;
+                        case 'HomeView': return <HomeView navigator={navigator} types={types} topProducts={topProducts} />;
+                        case 'ProductDetail': return <ProductDetail navigator={navigator} product={route.product} />;
                         default: return <ListProduct navigator={navigator} />;
                     }
                 }
