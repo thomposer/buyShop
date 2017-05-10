@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, ListView } from 'react-native';
 
 const url = 'http://localhost/app/images/product/';
 
@@ -19,16 +19,19 @@ class TopProduct extends Component {
                 <View style={titleContainer}>
                     <Text style={title}> TOP PRODUCT</Text>
                 </View>
-                <View style={body}>
-                    {topProducts.map(e => (
-                        <TouchableOpacity style={productStyle} onPress={() => this.gotoDetail(e)} key={e.id}>
-                            <Image source={{ uri: `${url}${e.images[0]}` }} style={productImage} />
-                            <Text style={productName}>{e.name.toUpperCase()}</Text>
-                            <Text style={productPrice}> ${e.price}</Text>
+                <ListView
+                    enableEmptySections={true}
+                    dataSource={new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }).cloneWithRows(topProducts)}
+                    contentContainerStyle={body}
+                    renderRow={product => (
+                        <TouchableOpacity style={productStyle} onPress={() => this.gotoDetail(product)} key={product}>
+                            <Image source={{ uri: `${url}${product.images[0]}` }} style={productImage} />
+                            <Text style={productName}>{product.name.toUpperCase()}</Text>
+                            <Text style={productPrice}> ${product.price}</Text>
                         </TouchableOpacity>
-                    ))}
+                    )}
+                />
 
-                </View>
             </View>
         );
     }

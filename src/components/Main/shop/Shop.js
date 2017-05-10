@@ -16,6 +16,7 @@ import icContact from '../../../media/appicon/contact0.png';
 import icContactSelected from '../../../media/appicon/contact.png';
 import icSearch from '../../../media/appicon/search0.png';
 import icSearchSelected from '../../../media/appicon/search.png';
+import global from '../../../components/global';
 
 export default class Shop extends Component {
 
@@ -24,8 +25,10 @@ export default class Shop extends Component {
         this.state = {
             selectedTab: 'home',
             types: [],
-            topProducts: []
+            topProducts: [],
+            cartArray: []
         };
+        global.addProductToCart = this.addProduct.bind(this);
     }
     componentDidMount() {
         fetch('http://localhost/app/')
@@ -35,6 +38,11 @@ export default class Shop extends Component {
                 this.setState({ types: type, topProducts: product });
             });
     }
+
+    addProduct(product) {
+        this.setState({ cartArray: this.state.cartArray.concat(product) });
+    }
+
     openMenu() {
         const { open } = this.props;
         open();
@@ -42,7 +50,7 @@ export default class Shop extends Component {
 
     render() {
         const { iconStyle } = styles;
-        const { types, selectedTab, topProducts } = this.state;
+        const { types, selectedTab, topProducts, cartArray } = this.state;
         return (
             <View style={{ flex: 1 }}>
                 <Header onOpen={this.openMenu.bind(this)} />
@@ -62,7 +70,7 @@ export default class Shop extends Component {
                     <TabNavigator.Item
                         selected={selectedTab === 'cart'}
                         title="Cart"
-                        badgeText="1"
+                        badgeText={cartArray.length}
                         onPress={() => this.setState({ selectedTab: 'cart' })}
                         renderIcon={() => <Image source={icCart} style={iconStyle} />}
                         renderSelectedIcon={
@@ -70,7 +78,7 @@ export default class Shop extends Component {
                         }
                         selectedTitleStyle={{ color: '#26b391' }}
                     >
-                        {<Cart />}
+                        {<Cart cartArray={cartArray} />}
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         selected={selectedTab === 'search'}

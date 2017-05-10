@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import {
+    View, Text, StyleSheet, Image,
+    Dimensions, TouchableOpacity
+} from 'react-native';
 import icBack from '../../../../media/appicon/back.png';
 import icOrder from '../../../../media/appicon/cartfull.png';
-import sp1 from '../../../../media/temp/sp1.jpeg';
+import global from '../../../../components/global';
 
 const url = 'http://localhost/app/images/product/';
 class ProductDetail extends Component {
@@ -11,23 +14,23 @@ class ProductDetail extends Component {
         const { navigator } = this.props;
         navigator.pop();
     }
-
+    addThisProductToCart() {
+        const { product } = this.props;
+        global.addProductToCart(product);
+    }
     render() {
         const { name, images, id, price, material, color, description } = this.props.product;
-        console.log('----detail----');
-        console.log(`${url}${images[0]}`);
-        console.log('----detail----');
         const { container, wrapper, header, imgStyle, listImage,
             imageProduct, desProduct, titleProduct, priceProduct,
             topProduct, textBottom, bottom, viewColor } = styles;
         return (
-            <View style={wrapper} >
+            <View style={wrapper} key={id}>
                 <View style={container}>
                     <View style={header}>
-                        <TouchableOpacity onPress={this.goBack.bind(this)} key={id}>
+                        <TouchableOpacity onPress={this.goBack.bind(this)}>
                             <Image style={imgStyle} source={icBack} />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={this.addThisProductToCart.bind(this)}>
                             <Image style={imgStyle} source={icOrder} />
                         </TouchableOpacity>
                     </View>
@@ -57,8 +60,6 @@ class ProductDetail extends Component {
 
 const { width } = Dimensions.get('window');
 const widthScreen = (width / 2) - 30;
-const swiperWidth = (width / 1.8) - 30;
-const swiperHeight = (swiperWidth * 452) / 361;
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1, backgroundColor: '#cecece'
