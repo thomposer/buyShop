@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Image, StyleSheet } from 'react-native';
-import sp1 from '../../../../media/temp/sp1.jpeg';
-import sp2 from '../../../../media/temp/sp2.jpeg';
-import sp3 from '../../../../media/temp/sp3.jpeg';
-import sp4 from '../../../../media/temp/sp4.jpeg';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ListView } from 'react-native';
 
+const url = 'http://localhost/app/images/product/';
 class CartView extends Component {
     gotoDetail() {
         const { navigator } = this.props;
@@ -12,118 +9,46 @@ class CartView extends Component {
     }
     render() {
         const {
-            container, wrapper,
-            product, productImage, productInfo, titleProduct,
+            container, productStyle, productImage, productInfo, titleProduct,
             priceProduct, bottomProduct, bottom, number,
             showDetail, buttonDelete, topStyle, totalCart } = styles;
+        const { cartArray } = this.props;
         return (
             <View style={container} >
-                <ScrollView style={wrapper} showsVerticalScrollIndicator={false}>
-
-                    <View style={product}>
-                        <Image style={productImage} source={sp1} />
-
-                        <View style={productInfo}>
-                            <View style={topStyle}>
-                                <TouchableOpacity>
-                                    <Text style={titleProduct}> Lace Sleeeve Si</Text>
-                                </TouchableOpacity>
-                                <Text style={buttonDelete}>X</Text>
-                            </View>
-                            <Text style={priceProduct}> 117$</Text>
-                            <View style={bottomProduct}>
-                                <View style={bottom}>
+                <ListView
+                    contentContainerStyle={container}
+                    enableEmptySections
+                    dataSource={new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }).cloneWithRows(cartArray)}
+                    renderRow={itemCart => (
+                        <View style={productStyle}>
+                            <Image style={productImage} source={{ uri: `${url}${itemCart.product.images[0]}` }} />
+                            <View style={productInfo}>
+                                <View style={topStyle}>
                                     <TouchableOpacity>
-                                        <Text> +</Text>
+                                        <Text style={titleProduct}> {itemCart.product.name}</Text>
                                     </TouchableOpacity>
-                                    <Text style={number}> 1</Text>
-                                    <TouchableOpacity>
-                                        <Text> -</Text>
-                                    </TouchableOpacity>
+                                    <Text style={buttonDelete}>X</Text>
                                 </View>
-                                <Text style={showDetail}> Show Details</Text>
+                                <Text style={priceProduct}> {itemCart.product.price}$</Text>
+                                <View style={bottomProduct}>
+                                    <View style={bottom}>
+                                        <TouchableOpacity>
+                                            <Text> +</Text>
+                                        </TouchableOpacity>
+                                        <Text style={number}>{itemCart.quality}</Text>
+                                        <TouchableOpacity>
+                                            <Text> -</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <Text style={showDetail}> Show Details</Text>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                    <View style={product}>
-                        <Image style={productImage} source={sp2} />
-
-                        <View style={productInfo}>
-                            <View style={topStyle}>
-                                <TouchableOpacity>
-                                    <Text style={titleProduct}> Lace Sleeeve Si</Text>
-                                </TouchableOpacity>
-                                <Text style={buttonDelete}>X</Text>
-                            </View>
-                            <Text style={priceProduct}> 117$</Text>
-                            <View style={bottomProduct}>
-                                <View style={bottom}>
-                                    <TouchableOpacity>
-                                        <Text> +</Text>
-                                    </TouchableOpacity>
-                                    <Text style={number}> 1</Text>
-                                    <TouchableOpacity>
-                                        <Text> -</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <Text style={showDetail}> Show Details</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={product}>
-                        <Image style={productImage} source={sp3} />
-
-                        <View style={productInfo}>
-                            <View style={topStyle}>
-                                <TouchableOpacity>
-                                    <Text style={titleProduct}> Lace Sleeeve Si</Text>
-                                </TouchableOpacity>
-                                <Text style={buttonDelete}>X</Text>
-                            </View>
-                            <Text style={priceProduct}> 117$</Text>
-                            <View style={bottomProduct}>
-                                <View style={bottom}>
-                                    <TouchableOpacity>
-                                        <Text> +</Text>
-                                    </TouchableOpacity>
-                                    <Text style={number}> 1</Text>
-                                    <TouchableOpacity>
-                                        <Text> -</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <Text style={showDetail}> Show Details</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={product}>
-                        <Image style={productImage} source={sp4} />
-
-                        <View style={productInfo}>
-                            <View style={topStyle}>
-                                <TouchableOpacity>
-                                    <Text style={titleProduct}> Lace Sleeeve Si</Text>
-                                </TouchableOpacity>
-                                <Text style={buttonDelete}>X</Text>
-                            </View>
-                            <Text style={priceProduct}> 117$</Text>
-                            <View style={bottomProduct}>
-                                <View style={bottom}>
-                                    <TouchableOpacity>
-                                        <Text> +</Text>
-                                    </TouchableOpacity>
-                                    <Text style={number}> 1</Text>
-                                    <TouchableOpacity>
-                                        <Text> -</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <Text style={showDetail}> Show Details</Text>
-                            </View>
-                        </View>
-                    </View>
-                </ScrollView>
+                    )}
+                />
                 <View style={totalCart}>
                     <TouchableOpacity>
-                        <Text style={{ color: '#fff', alignItems:'center' }}>Total 350$ checkout now</Text>
+                        <Text style={{ color: '#fff', alignItems: 'center' }}>Total 350$ checkout now</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -152,19 +77,17 @@ const styles = StyleSheet.create({
         color: '#B10D65',
         fontSize: 20
     },
-    wrapper: {
+    
+    productStyle: {
+        flexDirection: 'row',
+        paddingVertical: 10,
+        backgroundColor: '#fff',
         shadowColor: '#2E272B',
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.5,
         marginLeft: 10,
         marginRight: 10,
         marginTop: 10
-    },
-    product: {
-        flexDirection: 'row',
-        paddingVertical: 10,
-        backgroundColor: '#fff',
-        margin: 10
     },
     productImage: {
         width: 70,

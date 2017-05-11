@@ -20,7 +20,7 @@ class TopProduct extends Component {
                     <Text style={title}> TOP PRODUCT</Text>
                 </View>
                 <ListView
-                    enableEmptySections={true}
+                    enableEmptySections
                     dataSource={new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }).cloneWithRows(topProducts)}
                     contentContainerStyle={body}
                     renderRow={product => (
@@ -30,6 +30,10 @@ class TopProduct extends Component {
                             <Text style={productPrice}> ${product.price}</Text>
                         </TouchableOpacity>
                     )}
+                    renderSeparator={(sectionId, rowId) => {
+                        if (rowId % 2 === 1) return <View style={{ width, height: 10 }} />;
+                        return null;
+                    }}
                 />
 
             </View>

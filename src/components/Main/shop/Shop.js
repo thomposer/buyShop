@@ -40,7 +40,7 @@ export default class Shop extends Component {
     }
 
     addProduct(product) {
-        this.setState({ cartArray: this.state.cartArray.concat(product) });
+        this.setState({ cartArray: this.state.cartArray.concat({ product, quality: 1 }) });
     }
 
     openMenu() {
