@@ -18,6 +18,10 @@ import icSearch from '../../../media/appicon/search0.png';
 import icSearchSelected from '../../../media/appicon/search.png';
 import global from '../../../components/global';
 
+import initData from '../../../api/initData';
+import saveCart from '../../../api/saveCart';
+import getCart from '../../../api/getCart';
+
 export default class Shop extends Component {
 
     constructor(props) {
@@ -31,16 +35,18 @@ export default class Shop extends Component {
         global.addProductToCart = this.addProduct.bind(this);
     }
     componentDidMount() {
-        fetch('http://localhost/app/')
-            .then(res => res.json())
+        initData()
             .then(resJson => {
                 const { type, product } = resJson;
                 this.setState({ types: type, topProducts: product });
             });
+        getCart()
+            .then(cartArray => this.setState({ cartArray }));
     }
 
     addProduct(product) {
-        this.setState({ cartArray: this.state.cartArray.concat({ product, quality: 1 }) });
+        this.setState({ cartArray: this.state.cartArray.concat({ product, quality: 1 }) },
+            () => saveCart(this.state.cartArray));
     }
 
     openMenu() {
